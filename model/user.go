@@ -10,7 +10,7 @@ type User struct {
 	Email     string
 	Password  string
 	Age       int
+	Gender    int
 	DietDatas []DietData
-	Motions   []Motion `gorm:"many2many:user_motions;"`
 	Coupons   []Coupon `gorm:"many2many:user_coupons;"`
 }
