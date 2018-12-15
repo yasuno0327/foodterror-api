@@ -11,5 +11,3 @@ WORKDIR /go/src/sandbox-api
 ADD . /go/src/sandbox-api
 RUN go get -u
 RUN go build
-
-CMD ["./sandbox-api"]

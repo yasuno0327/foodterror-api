@@ -1,10 +1,14 @@
 version: "3"
 services:
   app:
+    container_name: sandbox_api
     tty: true
+    entrypoint: /go/src/sandbox-api/startserver.sh
     build: .
     ports:
       - 3000:3000
+    volumes:
+      - .:/go/src/sandbox-api:cached
     depends_on:
       - db
     env_file:
@@ -12,11 +16,21 @@ services:
     networks:
       - sandbox-network
   db:
-    image: mysql:5.7
+    container_name: sandbox_db
+    build: ./db
     ports:
       - 3306:3306
     env_file:
       - development.env
+    networks:
+      - sandbox-network
+  nginx:
+    container_name: sandbox-proxy
+    build: ./nginx
+    depends_on:
+      - app
+    ports:
+      - 80:80
     networks:
       - sandbox-network
 
