@@ -4,6 +4,7 @@ import (
 	"log"
 	"sandbox-api/config"
 	"sandbox-api/model"
+	"sandbox-api/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -19,6 +20,8 @@ func main() {
 	defer db.Close()
 	// Migrate model
 	Migrate(db)
+	// Setup redis
+	service.InitRedis()
 	// Setup gin
 	router := gin.Default()
 	api := router.Group("/api")
@@ -30,7 +33,7 @@ func main() {
 func Migrate(db *gorm.DB) {
 	db.AutoMigrate(&model.User{})
 	db.AutoMigrate(&model.Motion{})
-	db.AutoMigrate(&model.Coupon{})
+	db.AutoMigrate(&model.FoodTerror{})
 	db.AutoMigrate(&model.Food{})
 	db.AutoMigrate(&model.DietData{})
 }
