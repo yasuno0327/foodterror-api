@@ -11,8 +11,8 @@ import (
 
 type User struct {
 	gorm.Model
-	Name              string  `json:"name,omitempty" gorm:"not null" binding:"exists"`
-	Email             string  `json:"email,omitempty" gorm:"not null" binding:"exists"`
+	Name              string  `json:"name,omitempty" gorm:"not null"`
+	Email             string  `json:"email,omitempty" gorm:"not null"`
 	EncryptedPassword string  `json:"password,omitempty" gorm:"not null"`
 	Age               int     `json:"age,omitempty" gorm:"not null"`
 	Sex               int     `json:"sex,omitempty" gorm:"not null"`
@@ -43,13 +43,13 @@ func (u *User) Battle(opponent *User, battle_type string) string {
 		if opponent.VictoryPoint > 0 {
 			db.Model(opponent).Updates(User{VictoryPoint: opponent.VictoryPoint - 1})
 		}
-		return "Lose"
+		return "Win"
 	} else if myPower < opponentPower {
 		db.Model(opponent).Updates(User{VictoryPoint: opponent.VictoryPoint + 2})
 		if u.VictoryPoint > 0 {
 			db.Model(u).Updates(User{VictoryPoint: u.VictoryPoint - 1})
 		}
-		return "Win"
+		return "Lose"
 	}
 	return "Draw"
 }
@@ -57,7 +57,7 @@ func (u *User) Battle(opponent *User, battle_type string) string {
 func (u *User) CalculatePower(start, end time.Time) float32 {
 	db := config.GetDB()
 	diet_datas := []DietData{}
-	db.Model(u).Related(diet_datas).Where("created_at BETWEEN ? AND ?", start, end)
+	db.Model(u).Related(&diet_datas).Where("created_at BETWEEN ? AND ?", start, end)
 	var power float32
 	for _, data := range diet_datas {
 		power += data.Burned

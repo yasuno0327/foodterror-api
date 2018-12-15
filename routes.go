@@ -19,6 +19,9 @@ func Routing(v1 *gin.RouterGroup) {
 	// Motions
 	motions := v1.Group("/motions")
 	motionRouting(motions)
+	// Battles
+	battles := v1.Group("/battles")
+	battleRouting(battles)
 }
 
 // Users
@@ -46,4 +49,11 @@ func foodRouting(foods *gin.RouterGroup) {
 // Motions
 func motionRouting(motions *gin.RouterGroup) {
 	motions.GET("", controller.AllMotions)
+}
+
+// Battles
+func battleRouting(battles *gin.RouterGroup) {
+	battles.Use(AuthMiddleware())
+	battles.POST("/matching", controller.Matching)
+	battles.POST("", controller.Battle)
 }

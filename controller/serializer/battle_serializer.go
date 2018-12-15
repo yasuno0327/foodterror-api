@@ -5,6 +5,6 @@ type BattleResult struct {
 }
 
 type BattleRequest struct {
-	OpponenEmail string `json:"oponent_email"`
-	BattleType   string `json:"battle_type"`
+	OpponentEmail string `json:"opponent_email"`
+	BattleType    string `json:"battle_type"`
 }
