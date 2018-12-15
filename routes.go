@@ -9,6 +9,11 @@ import (
 func Routing(v1 *gin.RouterGroup) {
 	// Users
 	users := v1.Group("/users")
+	userRouting(users)
+}
+
+// Users
+func userRouting(users *gin.RouterGroup) {
 	users.POST("/signup", controller.SignUp)
 	users.POST("/signin", controller.SignIn)
 	//Auth sample
