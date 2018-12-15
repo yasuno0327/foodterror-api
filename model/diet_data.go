@@ -6,6 +6,7 @@ type DietData struct {
 	UserID    int
 	Burned    float32 // Burned calories
 	Intake    float32 // Intake calories
+	Weight    float32
 	DataID    int
 	DataType  string
 	CreatedAt time.Time
