@@ -6,8 +6,8 @@ import (
 
 type Food struct {
 	gorm.Model
-	Name      string
-	Intake    float32    // Intake calories
-	ImageURL  string     `json:"image_url"`
-	DietDatas []DietData `gorm:"polymophic:Data;"`
+	Name      string     `json"name,omitempty"`
+	Intake    float32    `json:"intake,omitempty"` // Intake calories
+	ImageURL  string     `json:"image_url,omitempty"`
+	DietDatas []DietData `gorm:"polymophic:Data;" json:"diet_datas,omitempty"`
 }

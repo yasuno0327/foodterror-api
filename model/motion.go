@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 
 type Motion struct {
 	gorm.Model
-	Name      string     // Motion name ex) スクワット
-	Burned    float32    // Burned calories
-	DietDatas []DietData `gorm:"polymophic:Data;"`
+	Name      string     `json:"name"`
+	Burned    float32    `json:"burned"`
+	DietDatas []DietData `json:"diet_datas,omitempty" gorm:"polymophic:Data;"`
 }

@@ -17,3 +17,21 @@ insert into foods(name,intake,image_url)values("手羽先",252,"https://s3-ap-no
 insert into foods(name,intake,image_url)values("寿司",170,"https://s3-ap-northeast-1.amazonaws.com/meshitero/photo/%E5%AF%BF%E5%8F%B8.jpg");
 insert into foods(name,intake,image_url)values("味噌汁",41,"https://s3-ap-northeast-1.amazonaws.com/meshitero/photo/%E5%91%B3%E5%99%8C%E6%B1%81.jpg");
 insert into foods(name,intake,image_url)values("餃子",194,"https://s3-ap-northeast-1.amazonaws.com/meshitero/photo/%E9%A4%83%E5%AD%90.jpg");
+
+insert into motions(name,burned)values("ウォーキング",226);
+insert into motions(name,burned)values("ランニング", 314);
+insert into motions(name,burned)values("ダンス", 410);
+insert into motions(name,burned)values("昇降運動", 262);
+insert into motions(name,burned)values("水泳", 278);
+insert into motions(name,burned)values("縄跳び", 610);
+insert into motions(name,burned)values("バランスボール", 132);
+insert into motions(name,burned)values("ヨガ", 120);
+insert into motions(name,burned)values("ストレッチ", 120);
+insert into motions(name,burned)values("ボルダリング", 304);
+insert into motions(name,burned)values("ゴルフ", 354);
+insert into motions(name,burned)values("登山", 384);
+insert into motions(name,burned)values("トランポリン", 184);
+insert into motions(name,burned)values("フラフープ", 210);
+insert into motions(name,burned)values("腕立て伏せ", 200);
+insert into motions(name,burned)values("腹筋", 148);
+insert into motions(name,burned)values("スクワット", 262);
