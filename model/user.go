@@ -3,6 +3,8 @@ package model
 import (
 	"crypto/sha256"
 	"fmt"
+	"sandbox-api/config"
+	"time"
 
 	"github.com/jinzhu/gorm"
 )
@@ -19,6 +21,49 @@ type User struct {
 	VictoryPoint      uint    `json:"victory_point,omitempty" gorm:"not null"`
 	DietDatas         []DietData
 	FoodTerror        []FoodTerror
+}
+
+func (u *User) Battle(opponent *User, battle_type string) string {
+	db := config.GetDB()
+	loc, _ := time.LoadLocation("Asia/Tokyo")
+	var start time.Time
+	end := time.Now().In(loc)
+	switch battle_type {
+	case "week":
+		start = end.AddDate(0, 0, -7)
+	case "month":
+		start = end.AddDate(0, -1, 0)
+	default:
+		start = end.AddDate(0, 0, -1)
+	}
+	myPower := u.CalculatePower(start, end)
+	opponentPower := opponent.CalculatePower(start, end)
+	if myPower > opponentPower {
+		db.Model(u).Updates(User{VictoryPoint: u.VictoryPoint + 2})
+		if opponent.VictoryPoint > 0 {
+			db.Model(opponent).Updates(User{VictoryPoint: opponent.VictoryPoint - 1})
+		}
+		return "Lose"
+	} else if myPower < opponentPower {
+		db.Model(opponent).Updates(User{VictoryPoint: opponent.VictoryPoint + 2})
+		if u.VictoryPoint > 0 {
+			db.Model(u).Updates(User{VictoryPoint: u.VictoryPoint - 1})
+		}
+		return "Win"
+	}
+	return "Draw"
+}
+
+func (u *User) CalculatePower(start, end time.Time) float32 {
+	db := config.GetDB()
+	diet_datas := []DietData{}
+	db.Model(u).Related(diet_datas).Where("created_at BETWEEN ? AND ?", start, end)
+	var power float32
+	for _, data := range diet_datas {
+		power += data.Burned
+		power -= data.Intake
+	}
+	return power
 }
 
 func (u *User) EncryptPassword() {
