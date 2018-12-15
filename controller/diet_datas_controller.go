@@ -35,7 +35,7 @@ func CreateFoodData(c *gin.Context) {
 		c.JSON(http.StatusNotFound, NewError(err))
 		return
 	}
-	if err := db.Model(user).Association("DietDatas").Append(&model.DietData{Intake: food.Intake, DataID: food.ID, DataType: "food"}).Error; err != nil {
+	if err := db.Model(&user).Association("DietDatas").Append(model.DietData{Intake: food.Intake, DataID: food.ID, DataType: "food"}).Error; err != nil {
 		c.JSON(http.StatusBadRequest, NewError(err))
 		return
 	}
@@ -43,4 +43,20 @@ func CreateFoodData(c *gin.Context) {
 }
 
 func CreateMotionData(c *gin.Context) {
+	db := config.GetDB()
+	user := CurrentUser(c)
+	motion := &model.Motion{}
+	if err := BindRequest(c, motion); err != nil {
+		c.JSON(http.StatusBadRequest, NewError(err))
+		return
+	}
+	if err := db.Where(motion).First(motion).Error; err != nil {
+		c.JSON(http.StatusNotFound, NewError(err))
+		return
+	}
+	if err := db.Model(&user).Association("DietDatas").Append(model.DietData{Burned: motion.Burned, DataID: motion.ID, DataType: "motion"}).Error; err != nil {
+		c.JSON(http.StatusBadRequest, NewError(err))
+		return
+	}
+	c.JSON(http.StatusOK, model.DietData{Burned: motion.Burned, DataID: motion.ID, DataType: "motion"})
 }
