@@ -11,4 +11,7 @@ func Routing(v1 *gin.RouterGroup) {
 	users := v1.Group("/users")
 	users.POST("/signup", controller.SignUp)
 	users.POST("/signin", controller.SignIn)
+	//Auth sample
+	users.Use(AuthMiddleware())
+	users.GET("/auth/sample", controller.AuthSample)
 }

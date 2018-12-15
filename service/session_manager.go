@@ -1,6 +1,8 @@
 package service
 
 import (
+	"strconv"
+
 	"github.com/go-redis/redis"
 )
 
@@ -23,4 +25,16 @@ func SetSession(userId uint) (string, error) {
 		return "", err
 	}
 	return key, nil
+}
+
+func GetUserId(key string) (int, error) {
+	userId, err := client.Get(key).Result()
+	if err != nil {
+		return 0, err
+	}
+	id, err := strconv.Atoi(userId)
+	if err != nil {
+		return 0, err
+	}
+	return id, err
 }

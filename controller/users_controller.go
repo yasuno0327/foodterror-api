@@ -44,3 +44,8 @@ func SignIn(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, serializer.SignInResponse{Token: token})
 }
+
+func AuthSample(c *gin.Context) {
+	u := CurrentUser(c)
+	c.JSON(http.StatusOK, u)
+}
