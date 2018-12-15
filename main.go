@@ -2,25 +2,29 @@ package main
 
 import (
 	"log"
-	"net/http"
-	"os"
+	"sandbox-api/config"
 	"sandbox-api/model"
 
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 func main() {
-	dbUser := os.Getenv("MYSQL_USER")
-	dbPass := os.Getenv("MYSQL_PASSWORD")
-	dbName := os.Getenv("MYSQL_DATABASE")
-	db, err := gorm.Open("mysql", dbUser+":"+dbPass+"@tcp(db)/"+dbName+"?charset=utf8&parseTime=True&loc=Local")
+	// Setup DB
+	db, err := config.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
+	// Migrate model
 	Migrate(db)
-	http.ListenAndServe(":3000", nil)
+	// Setup gin
+	router := gin.Default()
+	api := router.Group("/api")
+	v1 := api.Group("/v1")
+	Routing(v1)
+	router.Run(":3000")
 }
 
 func Migrate(db *gorm.DB) {
