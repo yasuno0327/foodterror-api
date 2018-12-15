@@ -1,0 +1,23 @@
+{
+  "Motions": [
+    {"name": "ウォーキング","burned": 226},
+    {"name": "ランニング","burned": 314},
+    {"name": "自転車","burned": 358},
+    {"name": "ダンス","burned": 410},
+    {"name": "昇降運動","burned": 262},
+    {"name": "水泳","burned": 278},
+    {"name": "縄跳び","burned": 610},
+    {"name": "バランスボール","burned": 132},
+    {"name": "ヨガ","burned": 120},
+    {"name": "ストレッチ","burned": 120},
+    {"name": "ボルダリング","burned": 304},
+    {"name": "ゴルフ","burned": 354},
+    {"name": "登山","burned": 384},
+    {"name": "トランポリン","burned": 184},
+    {"name": "フラフープ","burned": 210},
+    {"name": "腕立て伏せ","burned": 200},
+    {"name": "腹筋","burned": 148},
+    {"name": "スクワット","burned": 262}
+  ]
+}
+

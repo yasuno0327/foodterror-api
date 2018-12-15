@@ -7,5 +7,5 @@ type FoodTerror struct {
 	Name     string
 	Intake   float32 // Intake calories
 	ImageURL string  `json:"image_url"`
-	Users    []User  `gorm:"many2many:user_coupons;"`
+	UserID   int
 }

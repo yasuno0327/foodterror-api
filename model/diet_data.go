@@ -1,13 +1,13 @@
 package model
 
-import "time"
+import "github.com/jinzhu/gorm"
 
 type DietData struct {
-	UserID    int
-	Burned    float32 // Burned calories
-	Intake    float32 // Intake calories
-	Weight    float32
-	DataID    int
-	DataType  string
-	CreatedAt time.Time
+	gorm.Model
+	UserID   int     `json:"-" gorm:"not null"`
+	Burned   float32 `json:"burned,omitempty"`
+	Intake   float32 `json:"intake,omitempty"`
+	Weight   float32 `json:"weight,omitempty"`
+	DataID   int     `json:"-"`
+	DataType string  `json:"-"`
 }
