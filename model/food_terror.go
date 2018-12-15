@@ -7,5 +7,5 @@ type FoodTerror struct {
 	Name     string
 	Intake   float32 // Intake calories
 	ImageURL string  `json:"image_url"`
-	UserID   int
+	UserID   uint
 }

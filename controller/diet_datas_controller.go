@@ -24,6 +24,22 @@ func CreateData(c *gin.Context) {
 }
 
 func CreateFoodData(c *gin.Context) {
+	db := config.GetDB()
+	user := CurrentUser(c)
+	food := &model.Food{}
+	if err := BindRequest(c, food); err != nil {
+		c.JSON(http.StatusBadRequest, NewError(err))
+		return
+	}
+	if err := db.Where(food).First(food).Error; err != nil {
+		c.JSON(http.StatusNotFound, NewError(err))
+		return
+	}
+	if err := db.Model(user).Association("DietDatas").Append(&model.DietData{Intake: food.Intake, DataID: food.ID, DataType: "food"}).Error; err != nil {
+		c.JSON(http.StatusBadRequest, NewError(err))
+		return
+	}
+	c.JSON(http.StatusOK, model.DietData{Intake: food.Intake, DataID: food.ID, DataType: "food"})
 }
 
 func CreateMotionData(c *gin.Context) {
