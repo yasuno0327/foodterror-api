@@ -16,6 +16,9 @@ func Routing(v1 *gin.RouterGroup) {
 	// Foods
 	foods := v1.Group("/foods")
 	foodRouting(foods)
+	// Motions
+	motions := v1.Group("/motions")
+	motionRouting(motions)
 }
 
 // Users
@@ -37,4 +40,9 @@ func dataRouting(dietDatas *gin.RouterGroup) {
 // Foods
 func foodRouting(foods *gin.RouterGroup) {
 	foods.GET("", controller.AllFoods)
+}
+
+// Motions
+func motionRouting(motions *gin.RouterGroup) {
+	motions.GET("", controller.AllMotions)
 }
