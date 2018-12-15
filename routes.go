@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"sandbox-api/controller"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +9,5 @@ import (
 func Routing(v1 *gin.RouterGroup) {
 	// Users
 	users := v1.Group("/users")
-	fmt.Println(users)
-	//users.POST("/signup", controller.)
+	users.POST("/signup", controller.SignUp)
 }

@@ -1,6 +1,9 @@
 package model
 
 import (
+	"crypto/sha256"
+	"fmt"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -12,5 +15,15 @@ type User struct {
 	Age               int    `json:"age,omitempty" gorm:"not null"`
 	Sex               int    `json:"sex,omitempty" gorm:"not null"`
 	DietDatas         []DietData
-	Coupons           []Coupon `gorm:"many2many:user_coupons;"`
+	FoodTerror        []FoodTerror `gorm:"many2many:user_coupons;"`
+}
+
+func (u *User) EncryptPassword() {
+	unsafePass := u.EncryptedPassword
+	u.EncryptedPassword = ToHash(unsafePass)
+}
+
+func ToHash(data string) string {
+	hash := sha256.Sum256([]byte(data))
+	return fmt.Sprintf("%x", hash)
 }
