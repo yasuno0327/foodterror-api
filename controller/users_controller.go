@@ -45,6 +45,16 @@ func SignIn(c *gin.Context) {
 	c.JSON(http.StatusOK, serializer.SignInResponse{Token: token})
 }
 
+func UserList(c *gin.Context) {
+	db := config.GetDB()
+	users := []model.User{}
+	if err := db.Find(&users).Error; err != nil {
+		c.JSON(http.StatusUnprocessableEntity, NewError(err))
+		return
+	}
+	c.JSON(http.StatusOK, serializer.UserList{Users: users})
+}
+
 func AuthSample(c *gin.Context) {
 	u := CurrentUser(c)
 	c.JSON(http.StatusOK, u)
