@@ -16,7 +16,7 @@ type User struct {
 	Sex               int     `json:"sex,omitempty" gorm:"not null"`
 	Weight            float32 `json:"weight,omitempty" gorm:"not null"`
 	Height            float32 `json:"height,omitempty" gorm:"not null"`
-	VictoryPoint      int     `json:"victory_point,omitempty" gorm:"not null"`
+	VictoryPoint      uint    `json:"victory_point,omitempty" gorm:"not null"`
 	DietDatas         []DietData
 	FoodTerror        []FoodTerror
 }
